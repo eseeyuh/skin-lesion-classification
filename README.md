@@ -25,6 +25,23 @@ Place your Kaggle API token at `~/.kaggle/kaggle.json`
 python scripts/download_data.py --data-dir data/ham10000
 ```
 
+## Training and evaluation
+
+Train all three models (or a single one) from the command line:
+
+```bash
+python -m scripts.train --model all
+python -m scripts.train --model resnet50 --epochs 20 --lr 1e-4
+```
+
+Each run writes a checkpoint to `results/models/` and a `results/<model>_result.json`
+(metrics + test predictions). Then regenerate every table, figure, the McNemar tests,
+the soft-voting ensemble and Grad-CAM:
+
+```bash
+python -m scripts.evaluate
+```
+
 ## Library usage
 
 ```python
@@ -71,6 +88,6 @@ tests/       unit tests
 - [x] Stabilise the baseline notebook (fp32 evaluation, gradient clipping)
 - [x] Repository scaffold, pinned dependencies, Colab-free data download
 - [x] Refactor notebook logic into the `src/` package
-- [ ] CLI entry points for training and evaluation
+- [x] CLI entry points for training and evaluation
 - [x] Unit tests (leakage-free split, metrics, model heads)
 - [ ] Streamlit demo with Grad-CAM

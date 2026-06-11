@@ -151,7 +151,8 @@ def plot_confusion_matrices(results: Dict, cfg: Config, save: bool = True):
     for ax, (name, res) in zip(axes, results.items()):
         cm = confusion_matrix(np.array(res["test_labels"]), np.array(res["test_preds"]),
                               labels=np.arange(cfg.num_classes)).astype(float)
-        cm /= cm.sum(axis=1, keepdims=True)
+        row_sums = cm.sum(axis=1, keepdims=True)
+        cm = np.divide(cm, row_sums, out=np.zeros_like(cm), where=row_sums > 0)
         sns.heatmap(cm, annot=True, fmt=".2f", xticklabels=cfg.class_names,
                     yticklabels=cfg.class_names, cmap="Blues", ax=ax, cbar=False)
         ax.set_title(cfg.model_display[name])

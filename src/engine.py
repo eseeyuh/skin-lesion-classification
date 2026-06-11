@@ -69,7 +69,8 @@ def evaluate(model, loader, device, criterion=None
 
 
 def train_model(cfg: Config, model_name: str, df_train, df_val, df_test, device,
-                lr: float = None, num_epochs: int = None, tag: str = "main") -> Dict:
+                lr: float = None, num_epochs: int = None, tag: str = "main",
+                pretrained: bool = True) -> Dict:
     """Train one architecture end to end and evaluate it on the test set.
 
     Returns the test metrics, training history, raw predictions and the
@@ -81,7 +82,8 @@ def train_model(cfg: Config, model_name: str, df_train, df_val, df_test, device,
     logger.info("Training %s | lr=%g | tag=%s", cfg.model_display[model_name], lr, tag)
 
     train_loader, val_loader, test_loader = make_dataloaders(df_train, df_val, df_test, cfg)
-    model = build_model(model_name, cfg.num_classes, device, freeze_backbone=True)
+    model = build_model(model_name, cfg.num_classes, device,
+                        freeze_backbone=True, pretrained=pretrained)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
     optimizer = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],
                                   lr=lr, weight_decay=cfg.weight_decay)
