@@ -1,0 +1,29 @@
+# Default experiment configuration. Load with: Config.from_yaml("configs/default.yaml")
+# Any field omitted here falls back to the dataclass default in src/config.py.
+
+# paths
+data_dir: data/ham10000
+output_dir: results
+metadata_csv: HAM10000_metadata.csv
+
+# data / training
+image_size: 224
+batch_size: 32
+num_epochs: 15
+early_stop_patience: 5
+num_workers: 2
+learning_rate: 1.0e-4
+weight_decay: 1.0e-4
+val_size: 0.15
+test_size: 0.15
+seed: 42
+
+# models
+model_names:
+  - resnet50
+  - efficientnet_b3
+  - vit_base_patch16_224
+model_lrs:
+  resnet50: 1.0e-4
+  efficientnet_b3: 1.0e-3
+  vit_base_patch16_224: 1.0e-4

@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+*.egg-info/
+
+# data & artifacts (regenerated, never versioned)
+data/
+results/
+*.pt
+*.pth
+
+# secrets — never commit Kaggle credentials
+kaggle.json
+.kaggle/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
